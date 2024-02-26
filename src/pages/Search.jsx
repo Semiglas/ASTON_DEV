@@ -5,7 +5,6 @@ import { populateSearch } from '../slices/SearchSlice'
 import { useDispatch } from 'react-redux'
 import SearchComponent from '../components/SearchComponent'
 function Search() {
-    let waitForClick = true
     const dispatch = useDispatch()
     // useEffect(() => {
     //     return () => dispatch(populateSearch([]))
@@ -18,7 +17,7 @@ function Search() {
     console.log(data)
     return (
         <>
-            <SearchComponent waitForClick={waitForClick} />
+            <SearchComponent />
             <MovieList localData={data} />
         </>
     )

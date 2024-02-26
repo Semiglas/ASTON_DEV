@@ -2,14 +2,17 @@ import React from 'react'
 import { useFetchAllMoviesQuery } from '../api/MoviesApi'
 import { Preloader } from '../components/Preloader'
 import MovieComponent from './MovieComponent'
-function MovieList({ fetchWhat, keyword, localData, waitForClick }) {
+function MovieList({ fetchWhat, keyword, localData }) {
+    let data;
     if (localData) {
-        var data = localData || []
+      const local = localData || [];
+      data = local;
     } else {
-        var { data, isLoading } = fetchWhat(keyword)
-        if (isLoading) {
-            return <Preloader />
-        }
+      const { data: fetchedData, isLoading } = fetchWhat(keyword);
+      if (isLoading) {
+        return <Preloader />;
+      }
+      data = fetchedData;
     }
 
     if (data === undefined || data.docs?.length === 0) {

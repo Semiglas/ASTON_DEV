@@ -10,6 +10,8 @@ function Search() {
     //     return () => dispatch(populateSearch([]))
     // }, [])
 
+
+    //здесь прописать логику того, что search должен либо брать из урлы, либо брать из ридукс
     const data = useSelector(state => {
         console.log(state.search.search)
         return state.search.search

@@ -40,7 +40,7 @@ function MovieComponent({
   };
 
   return (
-    <div className="movie-item rounded-lg overflow-hidden text-white  bg-gray-900   flex flex-col">
+    <div className="movie-item rounded-lg overflow-hidden shadow-xl text-white  bg-gray-900   flex flex-col">
       <img src={img} alt={title} />
       <div className="movie-item__content flex flex-col gap-2 p-2">
         <h1 className="text-xl font-bold  text-white">{title}</h1>

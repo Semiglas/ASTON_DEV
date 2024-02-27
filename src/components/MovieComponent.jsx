@@ -33,10 +33,10 @@ function MovieComponent({
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
+    genre: PropTypes.array.isRequired,
     year: PropTypes.number.isRequired,
     img: PropTypes.string,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   };
 
   return (

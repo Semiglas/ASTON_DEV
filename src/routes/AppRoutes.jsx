@@ -34,7 +34,8 @@ export function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/movie/:id" element={<Movie />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search/:query" element={<Search />} />
+          <Route path="/search/" element={<Search />} />
           <Route path="/search/movie/:id" element={<Movie />} />
 
           <Route element={<PrivateRoute />}>

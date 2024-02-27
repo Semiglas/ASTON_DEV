@@ -40,6 +40,7 @@ export const {
   useFetchAllMoviesQuery,
   useFetchMovieByIdQuery,
   useFetchMovieByKeywordQuery,
+  useLazyFetchMovieByKeywordQuery,
 } = moviesApi;
 export default moviesApi;
 

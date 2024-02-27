@@ -1,12 +1,13 @@
 import React from 'react'
 import { useFetchMovieByIdQuery } from '../api/MoviesApi'
 import { useParams } from 'react-router-dom'
+import { Preloader } from '../components/Preloader'
 
 function Movie() {
     const params = useParams()
     const { data, isLoading } = useFetchMovieByIdQuery(params.id)
     if (isLoading) {
-        return <div>Loading...</div>
+        return <Preloader></Preloader>
     }
 
     return (

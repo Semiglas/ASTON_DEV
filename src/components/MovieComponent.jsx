@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function truncateWords(text, maxWords, splitString, joinString) {
   const words = text.split(splitString);
@@ -27,6 +28,16 @@ function MovieComponent({
     ", ",
     ", "
   );
+
+  MovieComponent.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    year: PropTypes.number.isRequired,
+    img: PropTypes.string,
+    id: PropTypes.string.isRequired,
+  };
 
   return (
     <div className="movie-item rounded-lg overflow-hidden text-white  bg-gray-900   flex flex-col">

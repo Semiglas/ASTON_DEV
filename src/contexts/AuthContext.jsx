@@ -6,12 +6,12 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import { populateFavorites } from "../slices/FavoritesSlice";
 const AuthContext = createContext();
 
 export default AuthContext;
 
 export const AuthContextProvider = ({ children }) => {
-
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
   const createUser = (email, password) => {
@@ -22,10 +22,10 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) {
         setIsLoading(false);
-        setUser(null)
-        return
+        setUser(null);
+        return;
       }
-      setUser(currentUser)
+      setUser(currentUser);
       setIsLoading(false);
       console.log(currentUser);
     });
@@ -39,6 +39,18 @@ export const AuthContextProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const handleSignOut = (dispatch) => {
+  signOut(auth).then(() => {
+    dispatch(populateFavorites([]));
+    console.log("dispatched emptying in promise");
+    return;
+  });
+};
+
+export const handleSignIn = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
 };
 
 export const useAuthContext = () => {

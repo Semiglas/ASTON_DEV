@@ -7,9 +7,13 @@ import { Preloader } from "../components/Preloader";
 
 function Favorites() {
   const { favorites } = useFavorites();
-
-  if (!favorites) {
-    return <Preloader></Preloader>;
+  console.log(favorites);
+  if (!favorites || favorites.length === 0) {
+    return (
+      <div className="text-white m-12 text-center font-bold text-xl uppercase">
+        У вас пока нет избранного
+      </div>
+    );
   }
 
   return (

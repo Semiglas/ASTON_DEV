@@ -8,16 +8,18 @@ function MovieList({ localData }) {
 
   console.log(data);
 
+  console.log(data[1]);
   const dataToRender = data?.map((movie) => (
     <MovieComponent
       key={movie.id}
-      title={movie.name}
+      name={movie.name || movie.title}
       description={movie.description}
       rating={movie.rating.kp}
-      genre={movie.genres}
+      genre={movie.genres || movie.genre}
       year={movie.year}
       img={
-        movie.backdrop?.url ??
+        movie.backdrop?.url ||
+        movie.img ||
         "https://lh3.googleusercontent.com/proxy/6gtbHHp1aU8Orqph_ie1KL2JOXxzLWg4wq2zzTi3I6z3pYfDFVw_ChBQWp3UhHTiZbA4hMwWeA"
       }
       id={movie.id}

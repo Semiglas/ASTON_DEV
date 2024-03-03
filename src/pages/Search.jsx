@@ -64,3 +64,5 @@ export default Search;
 //     return () => dispatch(populateSearch([]))
 // }, [])
 /* TODO щщас нельзя просто зайти в серч */
+// TODO не могу удалить все буквы , ибо елси пустое то вписывает все буквы
+

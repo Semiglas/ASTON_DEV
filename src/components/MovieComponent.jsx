@@ -12,9 +12,10 @@ function truncateWords(text, maxWords, splitString, joinString) {
   return text;
 }
 
-function MovieComponent({ id, title, description, img, rating, year, genre }) {
+function MovieComponent({ id, name, description, img, rating, year, genre }) {
   const { removeFavorite, addFavorite, favorites } = useFavorites();
-console.log("this is ids etd" + id + title)
+
+  console.log("name here" + name);
   const truncatedDescription = truncateWords(description, 10, " ", " ");
 
   const getGenresString = truncateWords(
@@ -47,7 +48,7 @@ console.log("this is ids etd" + id + title)
       try {
         await addFavorite({
           id,
-          title,
+          name,
           description,
           img,
           rating,
@@ -62,7 +63,7 @@ console.log("this is ids etd" + id + title)
   };
 
   MovieComponent.propTypes = {
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     genre: PropTypes.array.isRequired,
@@ -73,9 +74,9 @@ console.log("this is ids etd" + id + title)
 
   return (
     <div className="movie-item rounded-lg overflow-hidden shadow-xl text-white  bg-gray-900   flex flex-col">
-      <img src={img} alt={title} />
+      <img src={img} alt={name} />
       <div className="movie-item__content flex flex-col gap-2 p-2">
-        <h1 className="text-xl font-bold  text-white">{title}</h1>
+        <h1 className="text-xl font-bold  text-white">{name}</h1>
         <p className="text-white opacity-70">
           <span className="font-bold italic">Жанр:</span> {getGenresString}
         </p>

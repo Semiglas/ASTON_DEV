@@ -2,11 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import { useCheckAuth } from "../hooks/useCheckAuth";
 import { Preloader } from "./Preloader";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext, handleSignOut } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Header() {
   const { user } = useAuthContext();
-  console.log(user.uid);
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  console.log(user?.uid);
+
+  function signOutAndNavigate() {
+    handleSignOut(dispatch);
+    navigate("/");
+  }
 
   return (
     <header className="flex justify-between bg-gray-900  items-center px-6">
@@ -60,7 +69,10 @@ function Header() {
             </button>
           </Link>
 
-          <button className="register-button border rounded-md p-2 text-white">
+          <button
+            className="register-button border rounded-md p-2 text-white"
+            onClick={signOutAndNavigate}
+          >
             Выйти
           </button>
         </div>

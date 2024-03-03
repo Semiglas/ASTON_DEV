@@ -15,6 +15,9 @@ export const useFavorites = () => {
 
   useEffect(() => {
     const fetchFavorites = () => {
+      if (!user) {
+        return;
+      }
       const favoritesRef = ref(db, "users/" + user.uid + "/favorites");
       onValue(favoritesRef, (snapshot) => {
         const data = snapshot.val();
@@ -26,7 +29,7 @@ export const useFavorites = () => {
     };
 
     fetchFavorites();
-  }, [db, user.uid, triggerPopulate]);
+  }, [db, user, triggerPopulate]);
 
   const addFavorite = async (movie) => {
     const favorites = ref(db, "users/" + user.uid + "/favorites/" + movie.id);

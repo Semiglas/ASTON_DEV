@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import FavoriteButton from "./FavoriteButton";
+import { useFavorites } from "../hooks/useFavorites";
 
 function truncateWords(text, maxWords, splitString, joinString) {
   const words = text.split(splitString);
@@ -10,16 +12,9 @@ function truncateWords(text, maxWords, splitString, joinString) {
   return text;
 }
 
-function MovieComponent({
-  id,
-  title,
-  description,
-  img,
-  rating,
-  year,
-  genre,
-  director,
-}) {
+function MovieComponent({ id, title, description, img, rating, year, genre }) {
+  const { removeFavorite, addFavorite, favorites } = useFavorites();
+console.log("this is ids etd" + id + title)
   const truncatedDescription = truncateWords(description, 10, " ", " ");
 
   const getGenresString = truncateWords(
@@ -28,6 +23,43 @@ function MovieComponent({
     ", ",
     ", "
   );
+
+  React.useEffect(() => {
+    const checkIfFavorite = () => {
+      return favorites?.some((item) => item.id === id);
+    };
+
+    setIsFavorite(checkIfFavorite());
+  }, [favorites, id]);
+  const [isFavorite, setIsFavorite] = React.useState(false);
+
+  const handleFavorite = async () => {
+    if (isFavorite) {
+      setIsFavorite(false);
+      try {
+        await removeFavorite(id);
+      } catch (e) {
+        console.log(e);
+        setIsFavorite(true);
+      }
+    } else {
+      setIsFavorite(true);
+      try {
+        await addFavorite({
+          id,
+          title,
+          description,
+          img,
+          rating,
+          year,
+          genre,
+        });
+      } catch (e) {
+        setIsFavorite(false);
+        console.log(e);
+      }
+    }
+  };
 
   MovieComponent.propTypes = {
     title: PropTypes.string.isRequired,
@@ -61,9 +93,9 @@ function MovieComponent({
           <button className="more-info bg-gray-700 border rounded-md p-2 text-white">
             <Link to={`/movie/${id}`}>Подробнее</Link>
           </button>
-          <button className="add-to-favorites bg-gray-900 border rounded-md p-2 text-white">
-            В избранное
-          </button>
+          <FavoriteButton handleFavorite={handleFavorite}>
+            {isFavorite ? "Убрать из избранного" : "в избранное"}
+          </FavoriteButton>
         </div>
       </div>
     </div>

@@ -5,24 +5,9 @@ import MovieComponent from "./MovieComponent";
 
 function MovieList({ localData }) {
   let data = localData;
-  //   if (localData) {
-  //     const local = localData || [];
-  //     data = local;
-  //   } else {
-  //     const { data: fetchedData, isLoading } = fetchWhat(keyword);
-  //     if (isLoading) {
-  //       return <Preloader />;
-  //     }
-  //     data = fetchedData;
-  //   }
 
-  //   if (data === undefined || data.length === 0) {
-  //     return (
-  //       <div className="w-max mx-auto uppercase text-xl font-bold text-white">
-  //         Ничего не найдено
-  //       </div>
-  //     );
-  //   }
+  console.log(data);
+
   const dataToRender = data?.map((movie) => (
     <MovieComponent
       key={movie.id}
@@ -31,7 +16,10 @@ function MovieList({ localData }) {
       rating={movie.rating.kp}
       genre={movie.genres}
       year={movie.year}
-      img={movie.backdrop.url ?? "https://lh3.googleusercontent.com/proxy/6gtbHHp1aU8Orqph_ie1KL2JOXxzLWg4wq2zzTi3I6z3pYfDFVw_ChBQWp3UhHTiZbA4hMwWeA"}
+      img={
+        movie.backdrop?.url ??
+        "https://lh3.googleusercontent.com/proxy/6gtbHHp1aU8Orqph_ie1KL2JOXxzLWg4wq2zzTi3I6z3pYfDFVw_ChBQWp3UhHTiZbA4hMwWeA"
+      }
       id={movie.id}
     />
   ));

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+// import { useCheckAuth } from "../hooks/useCheckAuth";
+import { Preloader } from "./Preloader";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function Header() {
-  let isAuth = false;
+  const { user } = useAuthContext();
+  console.log(user.uid);
+
   return (
     <header className="flex justify-between bg-gray-900  items-center px-6">
       <Link to={"/"} className="logo">
@@ -28,19 +33,36 @@ function Header() {
           </svg>{" "}
         </div>
       </Link>
-
-      {!isAuth && (
+      {!user && (
         <div className="login-register flex gap-4">
           <Link to="/login">
             <button className="login-button border rounded-md p-2 text-white">
-              Log-in
+              Войти
             </button>
           </Link>
           <Link to="/signup">
             <button className="register-button border rounded-md p-2 text-white">
-              Sign Up
+              Зарегистрироваться
             </button>
           </Link>
+        </div>
+      )}
+      {user && (
+        <div className="login-register flex gap-4">
+          <Link to="/history">
+            <button className="login-button border rounded-md p-2 text-white">
+              История
+            </button>
+          </Link>
+          <Link to={`/${user.uid}/favorites`}>
+            <button className="register-button border rounded-md p-2 text-white">
+              Избранное
+            </button>
+          </Link>
+
+          <button className="register-button border rounded-md p-2 text-white">
+            Выйти
+          </button>
         </div>
       )}
     </header>

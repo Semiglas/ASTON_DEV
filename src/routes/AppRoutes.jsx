@@ -4,6 +4,7 @@ import { Preloader } from "../components/Preloader";
 import PrivateRoute from "../components/PrivateRoute";
 import ErrorBoundary from "../components/ErrorBoundary";
 import Header from "../components/Header";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const importPage = (pageName) => lazy(() => import(`../pages/${pageName}`));
 
@@ -16,8 +17,13 @@ const Favorites = importPage("Favorites");
 const History = importPage("History");
 const NotFoundPage = importPage("NotFoundPage");
 
-
 export function AppRoutes() {
+  const { isLoading, user } = useAuthContext();
+
+  if (isLoading) {
+    return <Preloader />;
+  }
+
   return (
     <ErrorBoundary
       fallback={
@@ -40,7 +46,7 @@ export function AppRoutes() {
 
           <Route element={<PrivateRoute />}>
             <Route path="/history" element={<History />} />
-            <Route path="favorites" element={<Favorites />} />
+            <Route path="/:id/favorites" element={<Favorites />} />
           </Route>
 
           <Route path="/404" element={<NotFoundPage />} />

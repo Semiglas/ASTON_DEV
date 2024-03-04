@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { populateFavorites } from "../slices/FavoritesSlice";
+import { populateHistory } from "../slices/HistorySlice";
 const AuthContext = createContext();
 
 export default AuthContext;
@@ -44,6 +45,7 @@ export const AuthContextProvider = ({ children }) => {
 export const handleSignOut = (dispatch) => {
   signOut(auth).then(() => {
     dispatch(populateFavorites([]));
+    dispatch(populateHistory([]));
     console.log("dispatched emptying in promise");
     return;
   });

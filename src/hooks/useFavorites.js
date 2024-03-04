@@ -5,7 +5,7 @@ import { populateFavorites } from "../slices/FavoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const useFavorites = () => {
-  console.log("hi");
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites?.favorites);
   const [triggerPopulate, setTriggerPopulate] = useState(0);
@@ -24,6 +24,7 @@ export const useFavorites = () => {
         if (data) {
           const list = Object.values(data);
           dispatch(populateFavorites(list));
+          setIsLoading(false);
         }
       });
     };
@@ -52,5 +53,7 @@ export const useFavorites = () => {
     }
   };
 
-  return { addFavorite, removeFavorite, favorites };
+  return { addFavorite, removeFavorite, favorites, isLoading };
 };
+
+// правильно подобрать момент когда отменить isLoading

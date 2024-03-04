@@ -2,13 +2,16 @@ import React from "react";
 import { useFetchAllMoviesQuery } from "../api/MoviesApi";
 import { Preloader } from "../components/Preloader";
 import MovieComponent from "./MovieComponent";
+import { useFavorites } from "../hooks/useFavorites";
 
 function MovieList({ localData }) {
   let data = localData;
+  const { isLoading } = useFavorites();
 
-  console.log(data);
+  if (isLoading) {
+    return <Preloader></Preloader>;
+  }
 
-  console.log(data[1]);
   const dataToRender = data?.map((movie) => (
     <MovieComponent
       key={movie.id}

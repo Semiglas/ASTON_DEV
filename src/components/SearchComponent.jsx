@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
 import { Preloader } from "./Preloader";
 import { useNavigate, useParams } from "react-router-dom";
+import { useHistory } from "../hooks/useHistory";
 
 function SearchComponent() {
   const [search, setSearch] = useState();
@@ -16,6 +17,7 @@ function SearchComponent() {
   const { query } = useParams();
   const debouncedSearch = useDebounce(search, 500);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const { addToHistory } = useHistory();
   let { data } = useFetchMovieByKeywordQuery(debouncedSearch);
   const navigate = useNavigate();
   let timeoutId;
@@ -27,16 +29,21 @@ function SearchComponent() {
   }, []);
 
   function handleKeyDown(event) {
-    if (event.key === 'Enter') {
+    if (event.key === "Escape") {
+      setShowSuggestions(false);
+    }
+
+
+
+    if (event.key === "Enter") {
       handleSearch();
     }
   }
 
-
   console.log(query);
-  if (!search && query) {
-    setSearch(query);
-  }
+  // if (!search && query) {
+  //   setSearch(query);
+  // }
   const handleFocus = () => setShowSuggestions(true);
   function handleBlur() {
     timeoutId = setTimeout(() => {
@@ -52,13 +59,16 @@ function SearchComponent() {
     if (!search) {
       return;
     }
+
     dispatch(populateKeyword(search));
+    console.log(data);
     dispatch(populateSearch(data));
     navigate(`/search/${search}`);
+    addToHistory({ id: search });
   }
 
   return (
-    <div className="relative mt-4 flex z-10 mx-auto w-1/2">
+    <div className="relative mt-4 flex z-10 mx-auto w-1/2" onKeyDown={handleKeyDown}>
       <input
         className="w-full rounded-tl-md rounded-bl-md px-2"
         value={search}
@@ -66,12 +76,13 @@ function SearchComponent() {
         type="text"
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
+
       ></input>
 
       <button
         onClick={handleSearch}
         className="border rounded-tr-md rounded-br-md  p-2 text-white"
+
       >
         Search
       </button>
@@ -116,8 +127,4 @@ TODO шапка не ререндериться при переходе со с�
  TODO запретить переходить на страницу поиска если инпут пустой
  */
 
-// useEffect(() => {
-//     if (data && data?.docs && !waitForClick) {
-//         dispatch(populateSearch(data))
-//     }
-// }, [data, dispatch])
+// FIXME если слишком быстро вводить и переходить то бывают баги....

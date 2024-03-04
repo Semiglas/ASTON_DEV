@@ -46,6 +46,9 @@ function Search() {
   return (
     <>
       <SearchComponent />
+      <h1 className="pt-8 px-4 pb-0 font-bold uppercase text-white text-xl">
+        Результаты поиска по запросу: {query}
+      </h1>
       {result.isFetching && <Preloader />}
       {result.isSuccess && <MovieList localData={localData} />}
       {/* если уже есть локалДата из стора*/}
@@ -65,4 +68,3 @@ export default Search;
 // }, [])
 /* TODO щщас нельзя просто зайти в серч */
 // TODO не могу удалить все буквы , ибо елси пустое то вписывает все буквы
-

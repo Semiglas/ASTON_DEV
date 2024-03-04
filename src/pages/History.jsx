@@ -12,7 +12,6 @@ function History() {
   }
 
   function handleRemoveHistory(search) {
-    // Modified to accept search as a parameter
     removeHistory({
       id: search,
     });
@@ -25,7 +24,6 @@ function History() {
       </div>
     );
   }
-  console.log(history);
   return (
     <div className="w-full">
       <h1 className="text-white font-bold text-xl p-4">Ваша История Поиска:</h1>
@@ -43,7 +41,6 @@ function History() {
 }
 
 const HistoryComponent = ({ search, handleRemoveHistory }) => {
-  console.log(search + " in history component");
   return (
     <div className="gap-2 w-1/4">
       <Link to={`/search/${search}`}>
@@ -53,7 +50,7 @@ const HistoryComponent = ({ search, handleRemoveHistory }) => {
       </Link>
       <button
         onClick={(e) => {
-          e.stopPropagation(); // Stop event propagation
+          e.stopPropagation();
           handleRemoveHistory();
         }}
         className="w-2 text-white relative right-8"

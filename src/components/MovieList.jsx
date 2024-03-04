@@ -12,6 +12,17 @@ function MovieList({ localData }) {
     return <Preloader></Preloader>;
   }
 
+  if (!isLoading && data) {
+    const filteredData = data.filter((e) => {
+      if (!e.description || (!e.rating.kp && !e.rating) || !e.year) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    data = filteredData;
+  }
+
   const dataToRender = data?.map((movie) => (
     <MovieComponent
       key={movie.id}

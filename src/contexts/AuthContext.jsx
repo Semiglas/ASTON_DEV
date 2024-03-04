@@ -28,7 +28,6 @@ export const AuthContextProvider = ({ children }) => {
       }
       setUser(currentUser);
       setIsLoading(false);
-      console.log(currentUser);
     });
     return () => {
       unsubscribe();
@@ -46,7 +45,6 @@ export const handleSignOut = (dispatch) => {
   signOut(auth).then(() => {
     dispatch(populateFavorites([]));
     dispatch(populateHistory([]));
-    console.log("dispatched emptying in promise");
     return;
   });
 };

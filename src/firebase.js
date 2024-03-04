@@ -3,11 +3,11 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDiHAcxOTkCnhwebFSmXtG14ufkpJMnkNQ",
-  databaseURL: "https://react-aston-default-rtdb.europe-west1.firebasedatabase.app",
+  databaseURL:
+    "https://react-aston-default-rtdb.europe-west1.firebasedatabase.app",
   authDomain: "react-aston.firebaseapp.com",
   projectId: "react-aston",
   storageBucket: "react-aston.appspot.com",
@@ -18,5 +18,5 @@ const firebaseConfig = {
 // Initialize Firebase
 
 const app = initializeApp(firebaseConfig);
-export const database = getDatabase(app)
+export const database = getDatabase(app);
 export const auth = getAuth(app);

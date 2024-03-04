@@ -33,8 +33,6 @@ function SearchComponent() {
       setShowSuggestions(false);
     }
 
-
-
     if (event.key === "Enter") {
       handleSearch();
     }
@@ -68,7 +66,10 @@ function SearchComponent() {
   }
 
   return (
-    <div className="relative mt-4 flex z-10 mx-auto w-1/2" onKeyDown={handleKeyDown}>
+    <div
+      className="relative mt-4 flex z-10 mx-auto w-1/2"
+      onKeyDown={handleKeyDown}
+    >
       <input
         className="w-full rounded-tl-md rounded-bl-md px-2"
         value={search}
@@ -76,13 +77,11 @@ function SearchComponent() {
         type="text"
         onFocus={handleFocus}
         onBlur={handleBlur}
-
       ></input>
 
       <button
         onClick={handleSearch}
         className="border rounded-tr-md rounded-br-md  p-2 text-white"
-
       >
         Search
       </button>
@@ -91,7 +90,12 @@ function SearchComponent() {
         <div className="movies-in-search absolute top-10 w-full">
           {search &&
             data?.map((movie) => {
-              if (!movie.name) {
+              if (
+                !movie.name ||
+                !movie.rating.kp ||
+                !movie.year ||
+                !movie.description
+              ) {
                 return;
               }
               return (
@@ -119,12 +123,6 @@ function SearchComponent() {
 
 export default SearchComponent;
 
-/*
-TODO еще один кастом хук
-TODO шапка не ререндериться при переходе со страницы на страницу.
- TODO плейсхолдеры на случай если нет фото
- TODO propTypes
- TODO запретить переходить на страницу поиска если инпут пустой
- */
+
 
 // FIXME если слишком быстро вводить и переходить то бывают баги....

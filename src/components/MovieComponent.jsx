@@ -15,7 +15,6 @@ function truncateWords(text, maxWords, splitString, joinString) {
 function MovieComponent({ id, name, description, img, rating, year, genre }) {
   const { removeFavorite, addFavorite, favorites } = useFavorites();
 
-  console.log("name here" + name);
   const truncatedDescription = truncateWords(description, 10, " ", " ");
 
   const getGenresString = truncateWords(

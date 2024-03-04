@@ -11,7 +11,6 @@ export const useFavorites = () => {
   const [triggerPopulate, setTriggerPopulate] = useState(0);
   const db = getDatabase();
   const { user } = useAuthContext();
-  const users = ref(db, "users");
 
   useEffect(() => {
     const fetchFavorites = () => {

@@ -33,7 +33,6 @@ export function AppRoutes() {
       }
     >
       <Suspense fallback={<Preloader />}>
-        {/* isAuth */}
         <Header></Header>
         <Routes>
           <Route path="/" element={<Home />} />

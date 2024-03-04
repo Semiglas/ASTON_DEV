@@ -60,5 +60,3 @@ export const useHistory = () => {
 
   return { addToHistory, removeHistory, fetchHistory, history, isLoading };
 };
-
-// TODO у вас пока нет история, пока загружается. надо отделить загрузку от отсутствия истории в принципе

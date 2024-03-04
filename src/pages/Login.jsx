@@ -3,7 +3,6 @@ import { handleSignIn } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -12,8 +11,8 @@ function Login() {
     e.preventDefault();
     try {
       await handleSignIn(email, password);
-      setError(null)
-      navigate('/')
+      setError(null);
+      navigate("/");
     } catch (error) {
       console.log(error);
       setError(error.message);

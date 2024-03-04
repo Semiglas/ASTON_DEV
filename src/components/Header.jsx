@@ -9,8 +9,7 @@ import { useDispatch } from "react-redux";
 function Header() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  console.log(user?.uid);
+  const dispatch = useDispatch();
 
   function signOutAndNavigate() {
     handleSignOut(dispatch);

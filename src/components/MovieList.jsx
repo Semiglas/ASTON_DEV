@@ -3,26 +3,26 @@ import { useFetchAllMoviesQuery } from "../api/MoviesApi";
 import { Preloader } from "../components/Preloader";
 import MovieComponent from "./MovieComponent";
 import { useFavorites } from "../hooks/useFavorites";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function MovieList({ localData }) {
   let data = localData;
-  const { isLoading } = useFavorites();
+  const { isLoading, favorites } = useFavorites();
+  const { user } = useAuthContext();
 
-  if (isLoading) {
+
+  if (isLoading && user) {
     return <Preloader></Preloader>;
   }
 
   if (!isLoading && data) {
     const filteredData = data.filter((e) => {
-      if (!e.description || (!e.rating.kp && !e.rating) || !e.year) {
-        return false;
-      } else {
-        return true;
-      }
+      return Boolean(e.description && e.year);
     });
     data = filteredData;
   }
 
+  console.log(data);
   const dataToRender = data?.map((movie) => (
     <MovieComponent
       key={movie.id}

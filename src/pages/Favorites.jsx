@@ -11,6 +11,8 @@ function Favorites() {
   if (isLoading) {
     return <Preloader></Preloader>;
   }
+
+  console.log(favorites)
   if (favorites.length === 0) {
     return (
       <div className="text-white m-12 text-center font-bold text-xl uppercase">

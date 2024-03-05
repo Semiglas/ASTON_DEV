@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   useFetchMovieByIdQuery,
   useFetchMovieByKeywordQuery,
@@ -18,15 +18,20 @@ function SearchComponent() {
   const debouncedSearch = useDebounce(search, 500);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { addToHistory } = useHistory();
-  let { data } = useFetchMovieByKeywordQuery(debouncedSearch);
+  const inputRef = useRef(query);
+  let { data, isFetching, isSuccess } =
+    useFetchMovieByKeywordQuery(debouncedSearch);
   const navigate = useNavigate();
   let timeoutId;
 
   useEffect(() => {
+    if (query) {
+      setSearch(query);
+    }
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [query]);
 
   function handleKeyDown(event) {
     if (event.key === "Escape") {
@@ -38,10 +43,6 @@ function SearchComponent() {
     }
   }
 
-  console.log(query);
-  // if (!search && query) {
-  //   setSearch(query);
-  // }
   const handleFocus = () => setShowSuggestions(true);
   function handleBlur() {
     timeoutId = setTimeout(() => {
@@ -53,17 +54,21 @@ function SearchComponent() {
     data = [];
   }
 
-  function handleSearch() {
+  const handleSearch = () => {
     if (!search) {
       return;
     }
+    console.log(isSuccess);
+    //камень преткновения тут. если слишком быстро нажимаешь, то вообще не та дата высвечивается
 
-    dispatch(populateKeyword(search));
     console.log(data);
+    console.log(search);
+    dispatch(populateSearch([]));
+    dispatch(populateKeyword(search));
     dispatch(populateSearch(data));
     navigate(`/search/${search}`);
     addToHistory({ id: search });
-  }
+  };
 
   return (
     <div
@@ -71,6 +76,7 @@ function SearchComponent() {
       onKeyDown={handleKeyDown}
     >
       <input
+        ref={inputRef}
         className="w-full rounded-tl-md rounded-bl-md px-2"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -122,7 +128,5 @@ function SearchComponent() {
 }
 
 export default SearchComponent;
-
-
 
 // FIXME если слишком быстро вводить и переходить то бывают баги....

@@ -30,7 +30,6 @@ function History() {
       <div className="grid grid-cols-3 items-center justify-center gap-2 flex-col">
         {history?.map((search) => (
           <HistoryComponent
-
             key={search}
             search={search}
             handleRemoveHistory={() => handleRemoveHistory(search)}

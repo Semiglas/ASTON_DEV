@@ -10,7 +10,6 @@ import { useDebounce } from "../hooks/useDebounce";
 import { Preloader } from "./Preloader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useHistory } from "../hooks/useHistory";
-// import {  } from "@reduxjs/toolkit";
 
 function SearchComponent() {
   const [search, setSearch] = useState();
@@ -62,21 +61,7 @@ function SearchComponent() {
     if (!search) {
       return;
     }
-
-    // if too fast
     dispatch(populateKeyword(search));
-    // console.log(debouncedSearch === search);
-    // await new Promise((resolve) => {
-    //   intervalId = setInterval(() => {
-    //     if (debouncedSearch === search) {
-    //       refetch();
-    //       clearInterval(intervalId);
-    //       resolve();
-    //     }
-    //   }, 100);
-    // });
-
-    // dispatch(populateSearch(data));
     addToHistory({ id: search });
     navigate(`/search/${search}`);
   };
@@ -127,7 +112,7 @@ function SearchComponent() {
                 </Link>
               );
             })}
-          {search && data?.length === 0 && (
+          {search?.length >= 2 && data?.length === 0 && (
             <div className="search-item w-full hover:bg-gray-400">
               По вашему запросу ничего не найдено
             </div>

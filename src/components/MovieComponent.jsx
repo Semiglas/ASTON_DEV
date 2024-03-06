@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import FavoriteButton from "./FavoriteButton";
 import { useFavorites } from "../hooks/useFavorites";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function truncateWords(text, maxWords, splitString, joinString) {
   const words = text.split(splitString);
@@ -13,7 +14,8 @@ function truncateWords(text, maxWords, splitString, joinString) {
 }
 
 function MovieComponent({ id, name, description, img, rating, year, genre }) {
-  const { removeFavorite, addFavorite, favorites } = useFavorites();
+  //check is user logged in or not
+  const { user } = useAuthContext();
 
   const truncatedDescription = truncateWords(description, 10, " ", " ");
 
@@ -23,43 +25,6 @@ function MovieComponent({ id, name, description, img, rating, year, genre }) {
     ", ",
     ", "
   );
-
-  React.useEffect(() => {
-    const checkIfFavorite = () => {
-      return favorites?.some((item) => item.id === id);
-    };
-
-    setIsFavorite(checkIfFavorite());
-  }, [favorites, id]);
-  const [isFavorite, setIsFavorite] = React.useState(false);
-
-  const handleFavorite = async () => {
-    if (isFavorite) {
-      setIsFavorite(false);
-      try {
-        await removeFavorite(id);
-      } catch (e) {
-        console.log(e);
-        setIsFavorite(true);
-      }
-    } else {
-      setIsFavorite(true);
-      try {
-        await addFavorite({
-          id,
-          name,
-          description,
-          img,
-          rating,
-          year,
-          genre,
-        });
-      } catch (e) {
-        setIsFavorite(false);
-        console.log(e);
-      }
-    }
-  };
 
   MovieComponent.propTypes = {
     name: PropTypes.string.isRequired,
@@ -93,9 +58,18 @@ function MovieComponent({ id, name, description, img, rating, year, genre }) {
           <button className="more-info bg-gray-700 border rounded-md p-2 text-white">
             <Link to={`/movie/${id}`}>Подробнее</Link>
           </button>
-          <FavoriteButton handleFavorite={handleFavorite}>
-            {isFavorite ? "Убрать из избранного" : "в избранное"}
-          </FavoriteButton>
+          {user && (
+             <FavoriteButton
+             id={id}
+             name={name}
+             description={description}
+             img={img}
+             rating={rating}
+             year={year}
+             genre={genre}
+           ></FavoriteButton>
+          )}
+
         </div>
       </div>
     </div>

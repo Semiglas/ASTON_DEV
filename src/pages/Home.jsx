@@ -7,9 +7,9 @@ function Home() {
   const { data, isLoading } = useFetchAllMoviesQuery();
 
   if (isLoading) {
+    console.log("im l,oading");
     return <Preloader />;
   }
-
   return (
     <div className="home">
       <SearchComponent />
@@ -19,5 +19,3 @@ function Home() {
 }
 
 export default Home;
-
-/* убрать fetchWhat и логику фетчинга оставить тут, пусть movieList всегда работает только с фетченной датой */

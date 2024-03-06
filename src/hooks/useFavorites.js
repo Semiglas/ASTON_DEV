@@ -22,18 +22,17 @@ export const useFavorites = () => {
         const data = snapshot.val();
         if (data) {
           const list = Object.values(data);
-          console.log(list)
           dispatch(populateFavorites(list));
           setIsLoading(false);
+        } else {
+          dispatch(populateFavorites([]));
         }
+        setIsLoading(false);
       });
     };
 
     fetchFavorites();
-
   }, [db, user, triggerPopulate]);
-
-
 
   const addFavorite = async (movie) => {
     const favorites = ref(db, "users/" + user.uid + "/favorites/" + movie.id);
@@ -58,5 +57,3 @@ export const useFavorites = () => {
 
   return { addFavorite, removeFavorite, favorites, isLoading };
 };
-
-// правильно подобрать момент когда отменить isLoading

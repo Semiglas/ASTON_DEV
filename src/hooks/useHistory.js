@@ -24,6 +24,9 @@ export const useHistory = () => {
         const list = Object.values(data);
         dispatch(populateHistory(list));
         setIsLoading(false);
+      } else {
+        dispatch(populateHistory([]));
+        setIsLoading(false);
       }
     });
   };

@@ -6,6 +6,7 @@ import { useFavorites } from "../hooks/useFavorites";
 import { useAuthContext } from "../contexts/AuthContext";
 
 function MovieList({ localData }) {
+  console.log('im being rendered at least')
   let data = localData;
   const { isLoading, favorites } = useFavorites();
   const { user } = useAuthContext();

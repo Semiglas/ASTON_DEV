@@ -20,7 +20,7 @@ function Favorites() {
       </div>
     );
   }
-
+  console.log(favorites)
   return (
     <div>
       <MovieList localData={favorites} />

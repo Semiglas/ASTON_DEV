@@ -3,9 +3,11 @@ import { useFetchMovieByIdQuery } from "../api/MoviesApi";
 import { useParams } from "react-router-dom";
 import { Preloader } from "../components/Preloader";
 import FavoriteButton from "../components/FavoriteButton";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function Movie() {
   const params = useParams();
+  const { user } = useAuthContext;
   const { data, isLoading } = useFetchMovieByIdQuery(params.id);
   if (isLoading) {
     return <Preloader></Preloader>;
@@ -30,7 +32,17 @@ function Movie() {
           <span className="font-bold italic">Описание:</span> {data.description}
         </p>
         <div className="grow movie-item__buttons flex justify-between">
-          <FavoriteButton movie={data} />
+          {user && (
+            <FavoriteButton
+              id={data.id}
+              name={data.name}
+              description={data.description}
+              img={data.backdrop.url}
+              rating={data.rating}
+              year={data.year}
+              genre={data.genres}
+            />
+          )}
         </div>
       </div>
     </div>

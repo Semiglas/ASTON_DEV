@@ -27,9 +27,10 @@ function History() {
   return (
     <div className="w-full">
       <h1 className="text-white font-bold text-xl p-4">Ваша История Поиска:</h1>
-      <div className="flex justify-center gap-2 flex-col">
+      <div className="grid grid-cols-3 items-center justify-center gap-2 flex-col">
         {history?.map((search) => (
           <HistoryComponent
+
             key={search}
             search={search}
             handleRemoveHistory={() => handleRemoveHistory(search)}
@@ -44,7 +45,7 @@ const HistoryComponent = ({ search, handleRemoveHistory }) => {
   return (
     <div className="gap-2 w-1/4">
       <Link to={`/search/${search}`}>
-        <button className="p-4 rounded-md  bg-gray-800 w-1/2 text-white m-2">
+        <button className="p-4 rounded-md history-comp bg-gray-800 w-1/2 text-white m-2">
           {search}
         </button>
       </Link>
@@ -53,7 +54,7 @@ const HistoryComponent = ({ search, handleRemoveHistory }) => {
           e.stopPropagation();
           handleRemoveHistory();
         }}
-        className="w-2 text-white relative right-8"
+        className="w-2 text-white relative left-4 bottom-8"
       >
         X
       </button>

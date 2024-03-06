@@ -4,25 +4,29 @@ import {
   useFetchMovieByKeywordQuery,
 } from "../api/MoviesApi";
 import { populateSearch, populateKeyword } from "../slices/SearchSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
 import { Preloader } from "./Preloader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useHistory } from "../hooks/useHistory";
+// import {  } from "@reduxjs/toolkit";
 
 function SearchComponent() {
   const [search, setSearch] = useState();
   const dispatch = useDispatch();
   const { query } = useParams();
-  const debouncedSearch = useDebounce(search, 500);
+  const keyword = useSelector((state) => {
+    return state.search.keyword;
+  });
+  const debouncedSearch = useDebounce(search, 200);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { addToHistory } = useHistory();
-  const inputRef = useRef(query);
-  let { data, isFetching, isSuccess } =
+  let { data, isFetching, isSuccess, error } =
     useFetchMovieByKeywordQuery(debouncedSearch);
   const navigate = useNavigate();
   let timeoutId;
+  let intervalId;
 
   useEffect(() => {
     if (query) {
@@ -54,20 +58,27 @@ function SearchComponent() {
     data = [];
   }
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!search) {
       return;
     }
-    console.log(isSuccess);
-    //камень преткновения тут. если слишком быстро нажимаешь, то вообще не та дата высвечивается
 
-    console.log(data);
-    console.log(search);
-    dispatch(populateSearch([]));
+    // if too fast
     dispatch(populateKeyword(search));
-    dispatch(populateSearch(data));
-    navigate(`/search/${search}`);
+    // console.log(debouncedSearch === search);
+    // await new Promise((resolve) => {
+    //   intervalId = setInterval(() => {
+    //     if (debouncedSearch === search) {
+    //       refetch();
+    //       clearInterval(intervalId);
+    //       resolve();
+    //     }
+    //   }, 100);
+    // });
+
+    // dispatch(populateSearch(data));
     addToHistory({ id: search });
+    navigate(`/search/${search}`);
   };
 
   return (
@@ -76,7 +87,6 @@ function SearchComponent() {
       onKeyDown={handleKeyDown}
     >
       <input
-        ref={inputRef}
         className="w-full rounded-tl-md rounded-bl-md px-2"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -87,7 +97,8 @@ function SearchComponent() {
 
       <button
         onClick={handleSearch}
-        className="border rounded-tr-md rounded-br-md  p-2 text-white"
+        className="border rounded-tr-md rounded-br-md  p-2 text-white "
+        disabled={isFetching ? true : false}
       >
         Search
       </button>
@@ -130,3 +141,6 @@ function SearchComponent() {
 export default SearchComponent;
 
 // FIXME если слишком быстро вводить и переходить то бывают баги....
+// потратил слишком много часов на исправление бага. в итоге остановился на одном из двух вариантов:
+// либо дизаблить кнопку поиcка, пока фетчатся саджесты. либо заново фетчить результаты уже в компоненте Search
+// пока решил задизаблить кнопку поиска

@@ -64,7 +64,7 @@ function MovieComponent({ id, name, description, img, rating, year, genre }) {
   MovieComponent.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
+    rating: PropTypes.number,
     genre: PropTypes.array.isRequired,
     year: PropTypes.number.isRequired,
     img: PropTypes.string,

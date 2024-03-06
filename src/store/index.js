@@ -14,6 +14,11 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(moviesApi.middleware),
+  devTools: {
+    enabled: true,
+    trace: true,
+    traceLimit: 50,
+  }
 });
 
 export { store };

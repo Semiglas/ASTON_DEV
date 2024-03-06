@@ -43,5 +43,3 @@ export const {
   useLazyFetchMovieByKeywordQuery,
 } = moviesApi;
 export default moviesApi;
-
-

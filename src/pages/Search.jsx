@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import SearchComponent from "../components/SearchComponent";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useLazyFetchMovieByKeywordQuery } from "../api/MoviesApi";
+import { useFetchMovieByKeywordQuery } from "../api/MoviesApi";
 import { Preloader } from "../components/Preloader";
 
 function Search() {
@@ -16,36 +16,20 @@ function Search() {
     return state.search.keyword;
   });
 
-  const [fetchNow, result] = useLazyFetchMovieByKeywordQuery();
+  const { data, isFetching, isSuccess, isError } =
+    useFetchMovieByKeywordQuery(query);
 
-  /* GRABBING CURRENT POPULATED SEARCH FROM REDUX STORE */
-
-  let localData = useSelector((state) => {
-    console.log(state.search.search);
-    return state.search.search;
-  });
-
-  // GRABBED
 
   useEffect(() => {
-    if (keyword !== query) {
-      fetchNow(query);
+    if (query) {
       dispatch(populateKeyword(query));
     }
-  }, [keyword]);
-
-  console.log(result.data)
-
-  useEffect(() => {
-    if (result.data && result.isFetching === false) {
-      dispatch(populateSearch(result.data));
+    if (isSuccess) {
+      dispatch(populateSearch(data));
     }
-  }, [result.isFetching, result.data, keyword, result.isSuccess]);
+  }, [query, isSuccess]);
 
-  // для случая если человек сразу заходит на страницу поиска через урлу и ищет
-  if (!result) {
-    return <MovieList localData={localData} />;
-  }
+
 
   return (
     <>
@@ -53,12 +37,9 @@ function Search() {
       <h1 className="pt-8 px-4 pb-0 font-bold uppercase text-white text-xl">
         Результаты поиска по запросу: {query}
       </h1>
-      {result.isFetching && <Preloader />}
-      {result.isSuccess && <MovieList localData={localData} />}
-      {/* если уже есть локалДата из стора*/}
-      {result.isUninitialized && localData && (
-        <MovieList localData={localData} />
-      )}
+      {isFetching && <Preloader />}
+      {!isFetching && data.length === 0 && <div className="text-white text-center mt-20">Ничего не найдено</div>}
+      {isSuccess && <MovieList localData={data} />}
     </>
   );
 }
@@ -67,3 +48,38 @@ export default Search;
 
 /* TODO подумать в какой момент опустошать search, чтобы нельзя было просто вручную вписать search в url и наткнуться на
 прошлые результаты*/
+
+
+  // const [fetchNow, result] = useLazyFetchMovieByKeywordQuery();
+
+  // if (query !== keyword) {
+  //   fetchNow(query);
+  //   dispatch(populateKeyword(query));
+  // }
+
+  /* GRABBING CURRENT POPULATED SEARCH FROM REDUX STORE */
+
+  // let localData = useSelector((state) => {
+  //   return state.search.search;
+  // });
+
+  // GRABBED
+
+  // useEffect(() => {
+  //   if (localData?.length === 0) {
+  //     console.log(keyword, query);
+  //     fetchNow(query);
+  //     dispatch(populateKeyword(query));
+  //   }
+  // }, [keyword, query]);
+
+  // useEffect(() => {
+  //   if (result.data && result.isFetching === false) {
+  //     dispatch(populateSearch(result.data));
+  //   }
+  // }, [result.isFetching, result.data, keyword, result.isSuccess]);
+
+  // для случая если человек сразу заходит на страницу поиска через урлу и ищет
+  // if (!result) {
+  //   return <MovieList localData={localData} />;
+  // }

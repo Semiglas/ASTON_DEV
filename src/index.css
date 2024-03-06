@@ -55,3 +55,7 @@ body {
   max-height: 200px;
   overflow-y: scroll;
 }
+
+.history-comp {
+  width: 200px;
+}

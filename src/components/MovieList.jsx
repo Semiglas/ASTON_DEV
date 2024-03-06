@@ -10,7 +10,6 @@ function MovieList({ localData }) {
   const { isLoading, favorites } = useFavorites();
   const { user } = useAuthContext();
 
-
   if (isLoading && user) {
     return <Preloader></Preloader>;
   }
@@ -33,8 +32,8 @@ function MovieList({ localData }) {
       year={movie.year}
       img={
         movie.backdrop?.url ||
-        movie.img ||
-        "https://lh3.googleusercontent.com/proxy/6gtbHHp1aU8Orqph_ie1KL2JOXxzLWg4wq2zzTi3I6z3pYfDFVw_ChBQWp3UhHTiZbA4hMwWeA"
+        movie?.img ||
+        "https://jammykam.files.wordpress.com/2017/10/sitecore-9-dynamic-placeholders.jpg"
       }
       id={movie.id}
     />

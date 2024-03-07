@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
-
+import { Link } from "react-router-dom";
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -1,2 +1,4 @@
 .env
 node_modules
+firebase.js
+firebase-debug.log

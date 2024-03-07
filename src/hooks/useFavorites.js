@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, set, remove, onValue } from "firebase/database";
 import { useAuthContext } from "../contexts/AuthContext";
-import { populateFavorites } from "../slices/FavoritesSlice";
+import { populateFavorites, selectFavorites } from "../slices/FavoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const useFavorites = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.favorites?.favorites);
+  const favorites = useSelector(selectFavorites);
   const [triggerPopulate, setTriggerPopulate] = useState(0);
   const db = getDatabase();
   const { user } = useAuthContext();
@@ -32,7 +32,7 @@ export const useFavorites = () => {
     };
 
     fetchFavorites();
-  }, [db, user, triggerPopulate]);
+  }, [user, triggerPopulate]);
 
   const addFavorite = async (movie) => {
     const favorites = ref(db, "users/" + user.uid + "/favorites/" + movie.id);

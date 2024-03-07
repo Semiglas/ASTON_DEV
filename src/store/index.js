@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import SearchSlice from "../slices/SearchSlice";
-
+import { loggerMiddleware } from "../middlewares/LoggerMiddleware";
 import moviesApi from "./../api/MoviesApi";
 import FavoritesSlice from "../slices/FavoritesSlice";
 import HistorySlice from "../slices/HistorySlice";
@@ -13,12 +13,15 @@ const store = configureStore({
     [HistorySlice.name]: HistorySlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(moviesApi.middleware),
+    getDefaultMiddleware().concat(
+      moviesApi.middleware,
+      loggerMiddleware.middleware
+    ),
   devTools: {
     enabled: true,
     trace: true,
     traceLimit: 50,
-  }
+  },
 });
 
 export { store };

@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import MovieList from "../components/MovieList";
-import { populateKeyword, populateSearch } from "../slices/SearchSlice";
+import {
+  populateKeyword,
+  populateSearch,
+  selectKeyword,
+} from "../slices/SearchSlice";
 import { useDispatch } from "react-redux";
 import SearchComponent from "../components/SearchComponent";
 import { useLocation } from "react-router-dom";
@@ -12,9 +16,7 @@ import { Preloader } from "../components/Preloader";
 function Search() {
   const dispatch = useDispatch();
   const { query } = useParams();
-  const keyword = useSelector((state) => {
-    return state.search.keyword;
-  });
+  const keyword = useSelector(selectKeyword);
 
   const { data, isFetching, isSuccess, isError } =
     useFetchMovieByKeywordQuery(query);

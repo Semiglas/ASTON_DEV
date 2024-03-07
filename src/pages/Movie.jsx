@@ -7,7 +7,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 
 function Movie() {
   const params = useParams();
-  const { user } = useAuthContext;
+  const { user } = useAuthContext();
   const { data, isLoading } = useFetchMovieByIdQuery(params.id);
   if (isLoading) {
     return <Preloader></Preloader>;
@@ -38,7 +38,7 @@ function Movie() {
               name={data.name}
               description={data.description}
               img={data.backdrop.url}
-              rating={data.rating}
+              rating={data.rating.kp}
               year={data.year}
               genre={data.genres}
             />

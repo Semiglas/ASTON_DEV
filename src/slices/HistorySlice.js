@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const HistorySlice = createSlice({
   name: "history",
@@ -19,6 +19,11 @@ const HistorySlice = createSlice({
     },
   },
 });
+
+export const selectHistory = (state) => state.history?.history;
+
+
+
 
 export const { populateHistory, removeHistory, addToHistory } =
   HistorySlice.actions;

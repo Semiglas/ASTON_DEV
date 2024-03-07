@@ -7,7 +7,6 @@ function Home() {
   const { data, isLoading } = useFetchAllMoviesQuery();
 
   if (isLoading) {
-    console.log("im l,oading");
     return <Preloader />;
   }
   return (

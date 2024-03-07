@@ -16,5 +16,7 @@ const SearchSlice = createSlice({
   },
 });
 
+export const selectKeyword = (state) => state.search.keyword;
+
 export const { populateSearch, populateKeyword } = SearchSlice.actions;
 export default SearchSlice;

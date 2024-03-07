@@ -36,8 +36,14 @@ export function AppRoutes() {
         <Header></Header>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/signup"
+            element={user ? <Navigate to="/" /> : <Signup />}
+          />
           <Route path="/movie/:id" element={<Movie />} />
           <Route path="/search/:query" element={<Search />} />
           <Route path="/search/" element={<Search />} />

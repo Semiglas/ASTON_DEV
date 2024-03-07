@@ -3,7 +3,11 @@ import {
   useFetchMovieByIdQuery,
   useFetchMovieByKeywordQuery,
 } from "../api/MoviesApi";
-import { populateSearch, populateKeyword } from "../slices/SearchSlice";
+import {
+  populateSearch,
+  populateKeyword,
+  selectKeyword,
+} from "../slices/SearchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
@@ -12,12 +16,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useHistory } from "../hooks/useHistory";
 
 function SearchComponent() {
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const { query } = useParams();
-  const keyword = useSelector((state) => {
-    return state.search.keyword;
-  });
+  const keyword = useSelector(selectKeyword);
   const debouncedSearch = useDebounce(search, 200);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { addToHistory } = useHistory();
@@ -25,8 +27,6 @@ function SearchComponent() {
     useFetchMovieByKeywordQuery(debouncedSearch);
   const navigate = useNavigate();
   let timeoutId;
-  let intervalId;
-
   useEffect(() => {
     if (query) {
       setSearch(query);
@@ -124,8 +124,3 @@ function SearchComponent() {
 }
 
 export default SearchComponent;
-
-// FIXME если слишком быстро вводить и переходить то бывают баги....
-// потратил слишком много часов на исправление бага. в итоге остановился на одном из двух вариантов:
-// либо дизаблить кнопку поиcка, пока фетчатся саджесты. либо заново фетчить результаты уже в компоненте Search
-// пока решил задизаблить кнопку поиска

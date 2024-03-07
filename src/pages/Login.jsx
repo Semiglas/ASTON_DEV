@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { handleSignIn } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { set } from "firebase/database";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  useEffect(() => {
+    return setError(null);
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await handleSignIn(email, password);
-      setError(null);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -53,11 +57,13 @@ function Login() {
             Login
           </button>
           {error ? <p className="text-red-500">{error}</p> : null}
-          <p class="message mt-6">
+          <p className="message mt-6">
             Не зарегестрированы?{" "}
-            <a href="#" className="underline">
-              Регистрация
-            </a>
+            <Link to="/signUp">
+              <a href="#" className="underline">
+                Регистрация
+              </a>
+            </Link>
           </p>
         </form>
       </div>

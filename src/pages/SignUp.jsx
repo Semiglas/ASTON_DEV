@@ -55,9 +55,11 @@ function SignUp() {
           </button>
           <p className="message mt-6">
             Уже зарегистрированы?{" "}
+            <Link to="/login">
             <a href="#" className="underline">
               Вход
             </a>
+            </Link>
           </p>
         </form>
       </div>

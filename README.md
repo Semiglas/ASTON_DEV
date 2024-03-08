@@ -1,9 +1,9 @@
-1 уровень (обязательный - необходимый минимум)
+## 1 уровень (обязательный - необходимый минимум)
 
 - [x] Реализованы Требования к функциональности
 - [x] Для хранения учетных записей пользователей, их Избранного и Истории поиска, используем Firebase
 
-React
+## React
 
 - [x] Пишем функциональные компоненты с хуками в приоритете над классовыми [components](/src/components/), [pages](src/pages/)
 - [x] Есть рендеринг списков [MovieList](/src/components/MovieList.jsx)
@@ -15,7 +15,7 @@ React
 - [x] Поиск не должен триггерить много запросов к серверу [Search](src/components/SearchComponent.jsx)
 - [x] Есть применение lazy + Suspense [AppRoutes](src/routes/AppRoutes.jsx)
 
-Redux
+## Redux
 
 - [x] Используем Modern Redux with Redux Toolkit Store [store](src/store/index.js)
 - [x] Используем слайсы Slice [Slices](src/slices/)
@@ -23,9 +23,13 @@ Redux
 - [x]Используется RTK Query [api](src/api/MoviesApi.js)
 - [x]Используется Transforming Responses [api](src/api/MoviesApi.js)
 
-2 уровень (необязательный)
+## 2 уровень (необязательный)
 
 - [x] Использован Firebase [useFavorites, useHistory](src/hooks/)
 - [ ] Виртуализация списков
 - [x] Telegram Feature Flag
 - [ ] Тесты
+
+## Использовано дополнительно:
+
+- [x] TailwindCSS

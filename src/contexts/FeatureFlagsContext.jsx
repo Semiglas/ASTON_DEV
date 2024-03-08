@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useMemo } from "react";
 
 export const FeatureFlagsContext = createContext();
 
@@ -17,8 +17,13 @@ export const FeatureFlagsProvider = ({ children }) => {
       .then((data) => setFeatureFlags(data));
   }, []);
 
+  const value = useMemo(
+    () => ({ featureFlags, shareToTelegram }),
+    [featureFlags, shareToTelegram]
+  );
+
   return (
-    <FeatureFlagsContext.Provider value={{ featureFlags, shareToTelegram }}>
+    <FeatureFlagsContext.Provider value={value}>
       {children}
     </FeatureFlagsContext.Provider>
   );

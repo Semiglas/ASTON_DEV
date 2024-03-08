@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFetchMovieByIdQuery } from "../api/MoviesApi";
 import { useParams } from "react-router-dom";
 import { Preloader } from "../components/Preloader";
 import FavoriteButton from "../components/FavoriteButton";
 import { useAuthContext } from "../contexts/AuthContext";
+import { FeatureFlagsContext } from "../contexts/FeatureFlagsContext";
 
 function Movie() {
   const params = useParams();
@@ -45,7 +46,7 @@ function Movie() {
             />
           )}
           {featureFlags.isTelegramShareEnabled && (
-            <button className="share w-11" onClick={() => shareToTelegram(id)}>
+            <button className="share w-11" onClick={() => shareToTelegram(data.id)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"

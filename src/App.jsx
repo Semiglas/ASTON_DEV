@@ -3,14 +3,17 @@ import { AppRoutes } from "./routes/AppRoutes";
 import Header from "./components/Header";
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./contexts/AuthContext";
+import { FeatureFlagsProvider } from "./contexts/FeatureFlagsContext";
 function App() {
   return (
     <>
-      <AuthContextProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </AuthContextProvider>
+      <FeatureFlagsProvider>
+        <AuthContextProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </AuthContextProvider>
+      </FeatureFlagsProvider>
     </>
   );
 }

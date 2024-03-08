@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const { createUser } = useAuthContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return setError(null);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +19,6 @@ function SignUp() {
       await createUser(email, password);
       navigate("/");
     } catch (error) {
-      console.log(error.message);
       setError(error.message);
     }
   };
@@ -53,13 +56,9 @@ function SignUp() {
           <button className="bg-gray-900 p-2 mt-8 rounded-md" type="submit">
             Зарегистрироваться
           </button>
+          {error && <p className="error text-red">{error}</p>}
           <p className="message mt-6">
-            Уже зарегистрированы?{" "}
-            <Link to="/login">
-            <a href="#" className="underline">
-              Вход
-            </a>
-            </Link>
+            Уже зарегистрированы? <Link to="/login">Вход</Link>
           </p>
         </form>
       </div>

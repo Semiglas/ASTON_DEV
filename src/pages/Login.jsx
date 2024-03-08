@@ -9,7 +9,7 @@ function Login() {
   const navigate = useNavigate();
   useEffect(() => {
     return setError(null);
-  });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,10 +17,11 @@ function Login() {
       await handleSignIn(email, password);
       navigate("/");
     } catch (error) {
-      console.log(error);
       setError(error.message);
     }
   };
+
+  console.log(error)
 
   return (
     <div className="login-page w-1/3 shadow-lg rounded-md p-4 mt-4 mx-auto bg-gray-500">
@@ -58,10 +59,8 @@ function Login() {
           {error ? <p className="text-red-500">{error}</p> : null}
           <p className="message mt-6">
             Не зарегестрированы?{" "}
-            <Link to="/signUp">
-              <a href="#" className="underline">
-                Регистрация
-              </a>
+            <Link to="/signUp" className="underline">
+              Регистрация
             </Link>
           </p>
         </form>

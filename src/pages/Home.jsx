@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MovieList from "../components/MovieList";
 import SearchComponent from "../components/SearchComponent";
 import { useFetchAllMoviesQuery } from "../api/MoviesApi";

@@ -1,25 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  useFetchMovieByIdQuery,
-  useFetchMovieByKeywordQuery,
-} from "../api/MoviesApi";
-import {
-  populateSearch,
-  populateKeyword,
-  selectKeyword,
-} from "../slices/SearchSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useFetchMovieByKeywordQuery } from "../api/MoviesApi";
+import { populateKeyword } from "../slices/SearchSlice";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
-import { Preloader } from "./Preloader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useHistory } from "../hooks/useHistory";
 
 function SearchComponent() {
-  const [search, setSearch] = useState("");
-  const dispatch = useDispatch();
   const { query } = useParams();
-  const keyword = useSelector(selectKeyword);
+  const [search, setSearch] = useState(query ? query : "");
+  const dispatch = useDispatch();
   const debouncedSearch = useDebounce(search, 200);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { addToHistory } = useHistory();
@@ -27,14 +18,14 @@ function SearchComponent() {
     useFetchMovieByKeywordQuery(debouncedSearch);
   const navigate = useNavigate();
   let timeoutId;
+
+
+  // нужен юзэффект чтобы убрать таймаут
   useEffect(() => {
-    if (query) {
-      setSearch(query);
-    }
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [query]);
+  }, []);
 
   function handleKeyDown(event) {
     if (event.key === "Escape") {
@@ -50,7 +41,7 @@ function SearchComponent() {
   function handleBlur() {
     timeoutId = setTimeout(() => {
       setShowSuggestions(false);
-    }, 400);
+    }, 200);
   }
 
   if (!search || search.length <= 1) {

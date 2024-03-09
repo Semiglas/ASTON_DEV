@@ -7,7 +7,7 @@
   "license": "MIT",
   "description": "Vite, React, Tailwind, Redux Toolkit Template\n",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },

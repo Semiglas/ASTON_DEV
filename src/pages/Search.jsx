@@ -8,7 +8,6 @@ import {
 } from "../slices/SearchSlice";
 import { useDispatch } from "react-redux";
 import SearchComponent from "../components/SearchComponent";
-import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useFetchMovieByKeywordQuery } from "../api/MoviesApi";
 import { Preloader } from "../components/Preloader";
@@ -37,7 +36,7 @@ function Search() {
         Результаты поиска по запросу: {query}
       </h1>
       {isFetching && <Preloader />}
-      {!isFetching && data.length === 0 && (
+      {!isFetching && data?.length === 0 && (
         <div className="text-white text-center mt-20">Ничего не найдено</div>
       )}
       {isSuccess && <MovieList localData={data} />}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
@@ -9,9 +9,10 @@ function SignUp() {
   const { createUser } = useAuthContext();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    return setError(null);
-  }, []);
+  //не нужно потому что так и так при ремаунте инициализируется с null
+  // useEffect(() => {
+  //   return setError(null);
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

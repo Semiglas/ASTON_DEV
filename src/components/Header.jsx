@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-// import { useCheckAuth } from "../hooks/useCheckAuth";
-import { Preloader } from "./Preloader";
 import { useAuthContext, handleSignOut } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

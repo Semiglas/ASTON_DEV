@@ -3,7 +3,7 @@ import { Preloader } from "../components/Preloader";
 import MovieComponent from "./MovieComponent";
 import { useFavorites } from "../hooks/useFavorites";
 import { useAuthContext } from "../contexts/AuthContext";
-// import { FixedSizeList as List } from "react-window"; //доделаю до воскресенья 
+// import { FixedSizeList as List } from "react-window"; //доделаю до воскресенья
 
 function MovieList({ localData }) {
   let data = localData;
@@ -12,7 +12,6 @@ function MovieList({ localData }) {
   if (isLoading && user) {
     return <Preloader></Preloader>;
   }
-
 
   if (!isLoading && data) {
     const filteredData = data.filter((e) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { handleSignIn } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -7,9 +7,11 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  useEffect(() => {
-    return setError(null);
-  }, []);
+
+  // не нужно потому что так и так при ремаунте инициализируется с null
+  // useEffect(() => {
+  //   return setError(null);
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ function Login() {
     }
   };
 
-  console.log(error)
+  console.log(error);
 
   return (
     <div className="login-page w-1/3 shadow-lg rounded-md p-4 mt-4 mx-auto bg-gray-500">

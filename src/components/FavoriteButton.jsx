@@ -3,17 +3,19 @@ import { useFavorites } from "../hooks/useFavorites";
 import PropTypes from "prop-types";
 
 function FavoriteButton({ id, name, description, img, rating, year, genre }) {
-  const { addFavorite, removeFavorite, favorites, fetchFavorites } =
+  const { addFavorite, removeFavorite, favorites } =
     useFavorites();
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(
+    favorites?.some((item) => item.id === id)
+  );
 
-  React.useEffect(() => {
-    const checkIfFavorite = () => {
-      return favorites?.some((item) => item.id === id);
-    };
+  // React.useEffect(() => {
+  //   const checkIfFavorite = () => {
+  //     return favorites?.some((item) => item.id === id);
+  //   };
 
-    setIsFavorite(checkIfFavorite());
-  }, [favorites, id]);
+  //   setIsFavorite(checkIfFavorite());
+  // }, [favorites, id]);
 
   const handleFavorite = async () => {
     if (isFavorite) {
@@ -32,7 +34,9 @@ function FavoriteButton({ id, name, description, img, rating, year, genre }) {
           name,
           description,
           img,
-          rating,
+          rating: {
+            kp: rating,
+          },
           year,
           genre,
         });
